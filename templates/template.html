@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jogoteca</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='bootstrap.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='app.css')}}">
+</head>
+
+<body>
+    <div class=" container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul id="messages" class="list-unstyled">
+            {% for message in messages %}
+            <li class="alert alert-success">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div>
+            {% if "usuario_logado" not in session or session["usuario_logado"] == None %}
+            <a class="btn btn-primary" href="{{ url_for('login') }}">Login</a>
+            {% else %}
+            <a class="btn btn-danger" href="{{ url_for('logout') }}">Logout</a>
+            <a class="btn btn-primary" href="{{ url_for('novo') }}">Novo Jogo</a>
+            {% endif %}
+        </div>
+        {% endwith %}
+        <div class="page-header">
+            {% block conteudo %} {% endblock %}
+            <script type="text/javascript" src="{{ url_for('static', filename='jquery.js') }}"></script>
+            <script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
+        </div>
+</body>
+
+</html>
